@@ -252,4 +252,11 @@ public class AuthConfig {
      * @since 1.16.7
      */
     private String dingTalkExclusiveCorpId;
+
+    /**
+     * 客户端id集合：Google使用
+     *
+     * @since 1.16.7.dora
+     */
+    private List<String> clientIds;
 }

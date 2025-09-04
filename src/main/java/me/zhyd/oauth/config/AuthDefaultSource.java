@@ -429,6 +429,27 @@ public enum AuthDefaultSource implements AuthSource {
             return AuthGoogleRequest.class;
         }
     },
+    GOOGLE_APP {
+        @Override
+        public String authorize() {
+            return "https://accounts.google.com/o/oauth2/v2/auth";
+        }
+
+        @Override
+        public String accessToken() {
+            return "https://oauth2.googleapis.com/token";
+        }
+
+        @Override
+        public String userInfo() {
+            return "https://openidconnect.googleapis.com/v1/userinfo";
+        }
+
+        @Override
+        public Class<? extends AuthDefaultRequest> getTargetClass() {
+            return AuthGoogleRequest.class;
+        }
+    },
     /**
      * Facebook
      */
