@@ -1,5 +1,7 @@
 package me.zhyd.oauth.utils;
 
+import java.util.Objects;
+
 import me.zhyd.oauth.cache.AuthStateCache;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.config.AuthDefaultSource;
@@ -25,8 +27,8 @@ public class AuthChecker {
      * @since 1.6.1-beta
      */
     public static boolean isSupportedAuth(AuthConfig config, AuthSource source) {
-        boolean isSupported = StringUtils.isNotEmpty(config.getClientId())
-            && StringUtils.isNotEmpty(config.getClientSecret());
+        boolean isSupported = (StringUtils.isNotEmpty(config.getClientId())
+            && StringUtils.isNotEmpty(config.getClientSecret())) || config.isIgnoreSupportedAuth();
         if (isSupported && AuthDefaultSource.STACK_OVERFLOW == source) {
             isSupported = StringUtils.isNotEmpty(config.getStackOverflowKey());
         }

@@ -1,7 +1,9 @@
 package me.zhyd.oauth.request;
 
+import com.alibaba.fastjson.JSON;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 
@@ -28,18 +30,18 @@ import me.zhyd.oauth.utils.SimpleGoogleHttpTransport;
  */
 public class AuthGoogleAppRequest extends AuthDefaultAppRequest {
 
-    private final SimpleGoogleHttpTransport transport;
-    private final JsonFactory jsonFactory;
+    private final NetHttpTransport transport;
+    private final GsonFactory jsonFactory;
 
     public AuthGoogleAppRequest(AuthConfig config) {
-        super(config, AuthDefaultSource.GOOGLE);
-        this.transport = new SimpleGoogleHttpTransport();
+        super(config, AuthDefaultSource.GOOGLE_APP);
+        this.transport = new NetHttpTransport();
         this.jsonFactory = new GsonFactory();
     }
 
     public AuthGoogleAppRequest(AuthConfig config, AuthStateCache authStateCache) {
-        super(config, AuthDefaultSource.GOOGLE, authStateCache);
-        this.transport = new SimpleGoogleHttpTransport();
+        super(config, AuthDefaultSource.GOOGLE_APP, authStateCache);
+        this.transport = new NetHttpTransport();
         this.jsonFactory = new GsonFactory();
     }
 
@@ -91,7 +93,7 @@ public class AuthGoogleAppRequest extends AuthDefaultAppRequest {
                     .gender(AuthUserGender.UNKNOWN)
                     .source(source.toString())
 //                    .token(appToken)
-//                    .rawUserInfo(payload)
+                    .rawUserInfo(JSON.parseObject(JSON.toJSONString(payload)))
                     .build();
 
             } else {

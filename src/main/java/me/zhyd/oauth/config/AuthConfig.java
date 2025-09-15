@@ -254,9 +254,16 @@ public class AuthConfig {
     private String dingTalkExclusiveCorpId;
 
     /**
-     * 客户端id集合：Google使用
+     * 客户端id集合：JWT 模式使用
      *
      * @since 1.16.7.dora
      */
     private List<String> clientIds;
+
+    /**
+     * 是否忽略Auth校验：JWT 模式使用
+     *
+     * @since 1.16.7.dora
+     */
+    private boolean ignoreSupportedAuth;
 }
