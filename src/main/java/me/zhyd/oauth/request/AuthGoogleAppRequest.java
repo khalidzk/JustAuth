@@ -92,7 +92,7 @@ public class AuthGoogleAppRequest extends AuthDefaultAppRequest {
                     .location(locale)
                     .gender(AuthUserGender.UNKNOWN)
                     .source(source.toString())
-//                    .token(appToken)
+                    .token(AuthToken.builder().oauthToken(payload.getAccessTokenHash()).build())
                     .rawUserInfo(JSON.parseObject(JSON.toJSONString(payload)))
                     .build();
 

@@ -221,7 +221,7 @@ public class AuthAppleAppRequest extends AuthDefaultAppRequest {
 //            .location(locale)
             .gender(AuthUserGender.UNKNOWN)
             .source(source.toString())
-//            .token(appToken)
+            .token(AuthToken.builder().oauthToken((String) claims.get("c_hash")).build())
             .rawUserInfo(JSON.parseObject(JSON.toJSONString(claims)))
             .build();
     }
