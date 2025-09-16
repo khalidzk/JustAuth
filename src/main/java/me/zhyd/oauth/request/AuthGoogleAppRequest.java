@@ -17,6 +17,7 @@ import me.zhyd.oauth.config.AuthDefaultSource;
 import me.zhyd.oauth.enums.AuthResponseStatus;
 import me.zhyd.oauth.enums.AuthUserGender;
 import me.zhyd.oauth.exception.AuthException;
+import me.zhyd.oauth.log.Log;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthToken;
 import me.zhyd.oauth.model.AuthUser;
@@ -35,13 +36,21 @@ public class AuthGoogleAppRequest extends AuthDefaultAppRequest {
 
     public AuthGoogleAppRequest(AuthConfig config) {
         super(config, AuthDefaultSource.GOOGLE_APP);
-        this.transport = new NetHttpTransport();
+        if (config.getHttpConfig() != null && config.getHttpConfig().getProxy() != null) {
+            this.transport = new NetHttpTransport.Builder().setProxy(config.getHttpConfig().getProxy()).build();
+        } else {
+            this.transport = new NetHttpTransport();
+        }
         this.jsonFactory = new GsonFactory();
     }
 
     public AuthGoogleAppRequest(AuthConfig config, AuthStateCache authStateCache) {
         super(config, AuthDefaultSource.GOOGLE_APP, authStateCache);
-        this.transport = new NetHttpTransport();
+        if (config.getHttpConfig() != null && config.getHttpConfig().getProxy() != null) {
+            this.transport = new NetHttpTransport.Builder().setProxy(config.getHttpConfig().getProxy()).build();
+        } else {
+            this.transport = new NetHttpTransport();
+        }
         this.jsonFactory = new GsonFactory();
     }
 
@@ -97,7 +106,7 @@ public class AuthGoogleAppRequest extends AuthDefaultAppRequest {
                     .build();
 
             } else {
-                System.out.println("Invalid ID token.");
+                Log.error("Invalid ID token.");
             }
         } catch (GeneralSecurityException e) {
             throw new AuthException(AuthResponseStatus.ILLEGAL_CODE, source);
